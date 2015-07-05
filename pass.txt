@@ -1,0 +1,5 @@
+
++++++++++++++++++++++++++
+login in admin django
+login - admin_boiler (admin_boiler@mail.ru)
+pass - 313131
