@@ -24,7 +24,7 @@ class Good(models.Model):
 	price = models.IntegerField(verbose_name='Цена',default=0)
 	good_additional = models.ManyToManyField(Good_additional, verbose_name='Комплектация')
 
-	power = models.CharField(max_length=250, verbose_name='Мощность', blank=True)
+	power = models.IntegerField(verbose_name='Мощность', blank=True,default=0)
 	voltage = models.CharField(max_length=250, verbose_name='Напряжение', blank=True)
 	number_of_phases = models.CharField(max_length=250, verbose_name='Количество фаз', blank=True)
 	continuous_operation = models.CharField(max_length=250, verbose_name='Время непрерывной работы', blank=True)

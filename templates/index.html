@@ -244,21 +244,18 @@
         <div class="col-sx-12 col-md-6 filter-in">
           <label>Производитель</label>
             <select id="filter-fubric" class="form-control filter-change">
-            <option>Generac</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option selected value="none">Не имеет значения</option>
+            <option >Generac</option>
+            <option >Mitsui</option>
             </select>
         </div>
         <div class="col-sx-12  col-md-6 filter-in">          
           <label>Топливо</label>
             <select id="filter-fuel" class="form-control filter-change">
-            <option>Generac</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option selected value="none">Не имеет значения</option>
+            <option >Метан/Пропан-бутан</option>
+            <option >Метан</option>
+            <option >Пропан-бутан</option>
             </select>
         </div>
       </div>
@@ -300,7 +297,7 @@
             <div class="row">
               <div class="col-sx-12 col-sm-6 col-md-6 text-left">
                 <img src="{% static 'img/icon_goods1.png' %}">
-                <p>{{ good.power }}</p>
+                <p>{{ good.power }} КВт</p>
                 <img src="{% static 'img/icon_goods2.png' %}">
                 <p>{{ good.fuel }}</p>  
                 <img src="{% static 'img/icon_goods3.png' %}">
@@ -352,7 +349,7 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods1.png' %}">
-                            <p>{{ good.power }}</p>
+                            <p>{{ good.power }} КВт</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods2.png' %}">
@@ -486,7 +483,7 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods1.png' %}">
-                            <p>{{ good.power }}</p>
+                            <p>{{ good.power }} КВт</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods2.png' %}">
@@ -529,7 +526,7 @@
                   <table class="table table-striped text-left table-options">
                     <tr>
                       <td>Мощность:</td>
-                      <td>{{ good.power }}</td>
+                      <td>{{ good.power }} КВт</td>
                     </tr>
                     <tr>
                       <td>Напряжение:</td>
@@ -928,13 +925,14 @@
 
     price_left = 25000;
     price_right = 100000;
-    power_left = 25000;
-    power_right = 100000;
-    fabric = $('#filter-fubric').val();
-    fuel = $('#filter-fuel').val();
+    power_left = 3;
+    power_right = 20;
+    fabric = 'none';
+    fuel = 'none';
     
 
     function get_data_filter(price_left,price_right,power_left,power_right,fabric,fuel){
+
 
        $.ajax({
                     url: "/filter_goods/",
@@ -988,10 +986,10 @@
   $(function() {
     $( "#slider-range_power" ).slider({
       range: true,
-      min: 10000,
-      max: 120000,
-      step: 1000,
-      values: [ 25000, 100000 ],
+      min: 3,
+      max: 20,
+      step: 1,
+      values: [ 3, 20 ],
       slide: function( event, ui ) {
         $( "#amount2" ).val(ui.values[0] + " - " + ui.values[1] + " КВт" );
       },

@@ -8,6 +8,7 @@ import datetime
 from django.db.models import Count, Min, Sum
 from django.db import connection
 from django.core.mail import send_mail
+import json
 
 # Create your views here.
 def index(request):
@@ -22,8 +23,29 @@ def filter_goods(request):
 		power_right = request.POST.get('power_right', '')
 		fabric = request.POST.get('fabric', '')
 		fuel = request.POST.get('fuel', '')
-		
 
-	return HttpResponse('ok')
+		price_interval = [x for x in range(int(price_left),int(price_right)+1)]
+		power_interval = [x for x in range(int(power_left),int(power_right)+1)]
+
+		# all_entries = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval)
+		if fabric == 'none' and fuel  == 'none':
+			all_entries_full = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval)
+		elif fuel  == 'none':
+			all_entries_full = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fabric__iexact=fabric)
+		elif fabric == 'none':
+			all_entries_full = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel)
+		else:
+			all_entries_full = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel).filter(fabric__iexact=fabric)
+
+
+
+		
+		# all_entries = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel).filter(fabric__iexact=fabric)
+
+	# Выбрать товары с данными параметрами и отсортировать по цене. Дешевые сначала.
+	# Упаковать в json. отправить на сервер
+	return HttpResponse(all_entries_full)
+
+	# return HttpResponse(json.dumps(qr), content_type="application/json")
 
 
