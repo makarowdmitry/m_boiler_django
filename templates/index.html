@@ -243,7 +243,7 @@
 
         <div class="col-sx-12 col-md-6 filter-in">
           <label>Производитель</label>
-            <select class="form-control">
+            <select id="filter-fubric" class="form-control filter-change">
             <option>Generac</option>
             <option>2</option>
             <option>3</option>
@@ -253,7 +253,7 @@
         </div>
         <div class="col-sx-12  col-md-6 filter-in">          
           <label>Топливо</label>
-            <select class="form-control">
+            <select id="filter-fuel" class="form-control filter-change">
             <option>Generac</option>
             <option>2</option>
             <option>3</option>
@@ -266,19 +266,19 @@
       <div class="row">
         <div class="col-sx-12  col-md-6 filter-in filter-scroll">        
           <label for="amount">Цена:</label>
-          <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-          <div id="slider-range_price"></div>
+          <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;" class="filter-change">
+          <div id="slider-range_price" class="filter-change"></div>
         </div>
 
         <div class="col-sx-12 col-md-6 filter-in filter-scroll">        
           <label for="amount2">Мощность:</label>
-          <input type="text" id="amount2" readonly style="border:0; color:#f6931f; font-weight:bold;">
-          <div id="slider-range_power"></div>
+          <input type="text" id="amount2" readonly style="border:0; color:#f6931f; font-weight:bold;" class="filter-change">
+          <div id="slider-range_power" class="filter-change"></div>
         </div>
       </div>
     </div>
     <div class="container-fluid wrapper text-center">
-    <div class="arrow-filter center-block"></div>
+    <div class="arrow-filter center-block" ></div>
       
     </div>
     <!-- /Filter -->
@@ -925,17 +925,60 @@
     </script>
 
     <script>
+
+    price_left = 25000;
+    price_right = 100000;
+    power_left = 25000;
+    power_right = 100000;
+    fabric = $('#filter-fubric').val();
+    fuel = $('#filter-fuel').val();
+    
+
+    function get_data_filter(price_left,price_right,power_left,power_right,fabric,fuel){
+
+       $.ajax({
+                    url: "/filter_goods/",
+                    type: "POST",
+                    dataType:"html",
+                    data: {
+                        "price_left": price_left,
+                        "price_right": price_right,
+                        "power_left": power_left,
+                        "power_right": power_right,
+                        "fabric": fabric,
+                        "fuel": fuel,
+                                            },
+                    error: function() {
+                        alert('Ошибка получения запроса');
+                    },
+
+                    success: function(data) {                
+                        alert(data);                      
+                    }
+        });
+      // alert(power_left +' '+power_right+'  '+price_left +' '+price_right+'  '+fuel +' '+fabric);
+
+        }
+
+
+
     // filter
   $(function() {
     $( "#slider-range_price" ).slider({
       range: true,
       min: 10000,
       max: 120000,
-      step: 10000,
+      step: 1000,
       values: [ 25000, 100000 ],
       slide: function( event, ui ) {
         $( "#amount" ).val(ui.values[0] + " - " + ui.values[1] + " руб" );
+      },
+      stop: function(event, ui) {
+        price_left = ui.values[0];
+        price_right = ui.values[1];
+        get_data_filter(price_left,price_right,power_left,power_right,fabric,fuel);
       }
+
     });
     $( "#amount" ).val($( "#slider-range_price" ).slider( "values", 0 ) +
       " - " + $( "#slider-range_price" ).slider( "values", 1 ) + " руб");
@@ -947,15 +990,34 @@
       range: true,
       min: 10000,
       max: 120000,
-      step: 10000,
+      step: 1000,
       values: [ 25000, 100000 ],
       slide: function( event, ui ) {
         $( "#amount2" ).val(ui.values[0] + " - " + ui.values[1] + " КВт" );
+      },
+      stop: function(event, ui) {        
+        power_left = ui.values[0];
+        power_right = ui.values[1];
+        get_data_filter(price_left,price_right,power_left,power_right,fabric,fuel);        
       }
     });
     $( "#amount2" ).val($( "#slider-range_power" ).slider( "values", 0 ) +
       " - " + $( "#slider-range_power" ).slider( "values", 1 ) + " КВт");
   });
+
+ 
+
+  // 1. Если меняется хоть один из элементов - берем значения и отправляем данные на сервер
+
+  $('.filter-change').on('change', function(){
+    fuel = $('#filter-fuel').val();
+    fabric = $('#filter-fubric').val();
+    get_data_filter(price_left,price_right,power_left,power_right,fabric,fuel);
+
+  });
+
+  // 2. Получаем данные в json и выводим циклом все товары.
+
   </script>
 
   </body>

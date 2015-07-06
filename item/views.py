@@ -14,5 +14,16 @@ def index(request):
 	goods = Good.objects.all()
 	return render_to_response('index.html',{'goods':goods})
 
-def filter_reuest(request):
-	return HttpRespnse('ок')
+def filter_goods(request):
+	if request.method == 'POST':
+		price_left = request.POST.get('price_left', '')
+		price_right = request.POST.get('price_right', '')
+		power_left = request.POST.get('power_left', '')
+		power_right = request.POST.get('power_right', '')
+		fabric = request.POST.get('fabric', '')
+		fuel = request.POST.get('fuel', '')
+		
+
+	return HttpResponse('ok')
+
+
