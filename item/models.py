@@ -43,6 +43,8 @@ class Good(models.Model):
 	noise_level = models.CharField(max_length=250, verbose_name='Уровень шума', blank=True)
 	fabric = models.CharField(max_length=250, verbose_name='Производитель', blank=True)
 
+	def get_additional_good(self):
+		return Good_additional.objects.filter(good__id=self.id)
 
 	class Meta:
 		verbose_name = 'Товар'        

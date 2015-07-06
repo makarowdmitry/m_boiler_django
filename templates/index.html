@@ -319,14 +319,14 @@
         </div>
           <div class="col-sx-12 col-sm-3 col-md-3 block-more-good">
               <p>{{ good.price }}<br/><span>руб</span></p>
-              <button class="catalog-btn" data-toggle="modal" data-target="#myModalbuy">Купить</button>
-              <button class="btn btn-border" data-toggle="modal" data-target="#myModal">Подробнее</button>  
+              <button class="catalog-btn" data-toggle="modal" data-target="#myModalbuy{{good.id}}">Купить</button>
+              <button class="btn btn-border" data-toggle="modal" data-target="#myModal{{good.id}}">Подробнее</button>  
           </div>
          </div>
 
 
           <!-- Modal Buy more-->
-          <div class="modal fade modal-goods" id="myModalbuy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal fade modal-goods" id="myModalbuy{{good.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-goods-body" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -388,7 +388,8 @@
                     </div>
                     <div class="clearfix"></div>
 
-                  
+                  {% if good.get_additional_good.count > 0 %}
+
 
                   <h5 class="text-left complect-title">Комплектация</h5>
                   
@@ -396,6 +397,8 @@
                     
                   
                   <div class="row">
+
+                  {% for addit in good.get_additional_good %}
                    
                     <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
                         <div class="checkbox text-left">
@@ -403,53 +406,21 @@
                         <input type="checkbox" id="checkboxWarning" value="option1">
                         </label>
                       </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
+                      <img src="media/{{ addit.image }}">
+                      <p>{{ addit.name }}</p>
+                      <p class="price-complect">{{ addit.price }} руб.</p>
                     </div>
+
+                    {% endfor %}
 
                
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                   
+                    
                     
                   </div>
+               </div>
 
-              
-                  
 
-                  </div>
+               {% endif %}
                       <!-- input modal -->
                   <div clas="row">
                     <div class="col-md-12 text-left">
@@ -464,7 +435,7 @@
                         </div>
 
                         <div class="form-group">
-                        <button class="catalog-btn pull-left">Отправить заявку</button>
+                        <button class="catalog-btn pull-left" id="good{{ good.id}}">Отправить заявку</button>
                          </div>                      
                       </form>
                       </div>
@@ -486,7 +457,7 @@
 
 
           <!-- Modal Read more-->
-          <div class="modal fade modal-goods" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal fade modal-goods" id="myModal{{good.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-goods-body" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -497,7 +468,7 @@
                   <h4 class="text-left title-goods">{{ good.name }}</h4>
                   <div class="row">
 
-                    <div class="col-md-6 block-image"><img src="{% static 'img/good1.jpg' %}"></div>
+                    <div class="col-md-6 block-image"><img src="media/{{good.image}}"></div>
                     <div class="col-md-6">
                       <div class="row">
                         <div class="col-sx-12 col-sm-6 col-md-6 text-left price-block-modal">
@@ -628,12 +599,18 @@
 
                   </table>
 
+
+                  {% if good.get_additional_good.count > 0 %}
+
+
                   <h5 class="text-left complect-title">Комплектация</h5>
                   
                   <div class="container-fluid complect-block">
                     
                   
                   <div class="row">
+
+                  {% for addit in good.get_additional_good %}
                    
                     <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
                         <div class="checkbox text-left">
@@ -641,53 +618,23 @@
                         <input type="checkbox" id="checkboxWarning" value="option1">
                         </label>
                       </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
+                      <img src="media/{{ addit.image }}">
+                      <p>{{ addit.name }}</p>
+                      <p class="price-complect">{{ addit.price }} руб.</p>
                     </div>
+
+                    {% endfor %}
 
                
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good">
-                        <div class="checkbox text-left">
-                        <label>
-                        <input type="checkbox" id="checkboxWarning" value="option1">
-                        </label>
-                      </div>
-                      <img src="{% static 'img/good2.jpg' %}">
-                      <p>Аккумулятор</p>
-                      <p class="price-complect">150000 руб.</p>
-                    </div>
-
-                   
+                    
                     
                   </div>
+               </div>
 
-              
+
+               {% endif %}
+
                   
-
-                  </div>
                       <!-- input modal -->
                   <div clas="row" id="order-form">
                     <div class="col-md-12 text-left">
@@ -702,7 +649,7 @@
                         </div>
 
                         <div class="form-group">
-                        <button class="catalog-btn pull-left">Отправить заявку</button>
+                        <button id="good{{ good.id}}" class="catalog-btn pull-left">Отправить заявку</button>
                          </div>                      
                       </form>
                       </div>
