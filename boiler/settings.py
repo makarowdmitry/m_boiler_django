@@ -96,6 +96,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'boiler','media')
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = '/media/'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'boiler','static')
 STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR),'boiler', 'static_raw'),)

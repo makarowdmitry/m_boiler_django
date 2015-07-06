@@ -284,38 +284,41 @@
     <!-- /Filter -->
 
     <!-- Goods -->
+{% if goods.count > 0  %}
+{% for good in goods %}
+
 
       <!-- Good1 -->
      <div class="container-fluid wrapper text-center">
       <div class="row good-block-general">
-        <div class="col-sx-12 col-sm-4 col-md-4 block-img-good"><img src="{% static 'img/good1.jpg' %}"></div>
+        <div class="col-sx-12 col-sm-4 col-md-4 block-img-good"><img src="media/{{ good.image }}"></div>
         <div class="col-sx-12 col-sm-5 col-md-5 optins-goods">
             <div class="row">
-              <div class="col-sx-12 col-sm-12 col-md-12 text-left"><h4>Guardian, модель 6269</h4></div>
+              <div class="col-sx-12 col-sm-12 col-md-12 text-left"><h4>{{ good.name }}</h4></div>
             </div>
           
             <div class="row">
               <div class="col-sx-12 col-sm-6 col-md-6 text-left">
                 <img src="{% static 'img/icon_goods1.png' %}">
-                <p>8кВА/8КВт</p>
+                <p>{{ good.power }}</p>
                 <img src="{% static 'img/icon_goods2.png' %}">
-                <p>8кВА/8КВт</p>  
+                <p>{{ good.fuel }}</p>  
                 <img src="{% static 'img/icon_goods3.png' %}">
-                <p>8кВА/8КВт</p>          
+                <p>{{ good.cooling_system }}</p>          
               </div>
               <div class="col-sm-6 col-md-6 text-left">
                 <img src="{% static 'img/icon_goods4.png' %}">
-                <p>8кВА/8КВт</p>
+                <p>{{ good.voltage }}</p>
                <img src="{% static 'img/icon_goods5.png' %}">
-                <p>8кВА/8КВт</p>  
+                <p>{{ good.dimensions }}</p>  
                 <img src="{% static 'img/icon_goods6.png' %}">
-                <p>8кВА/8КВт</p>          
+                <p>{{ good.weight }}</p>          
               </div>
               
             </div>
         </div>
           <div class="col-sx-12 col-sm-3 col-md-3 block-more-good">
-              <p>179 000<br/><span>руб</span></p>
+              <p>{{ good.price }}<br/><span>руб</span></p>
               <button class="catalog-btn" data-toggle="modal" data-target="#myModalbuy">Купить</button>
               <button class="btn btn-border" data-toggle="modal" data-target="#myModal">Подробнее</button>  
           </div>
@@ -331,14 +334,14 @@
                   <h4 class="modal-title" id="myModalLabel">Предварительный заказ</h4>
                 </div>
                 <div class="modal-body">
-                  <h4 class="text-left title-goods">Guardian, модель 6269</h4>
+                  <h4 class="text-left title-goods">{{ good.name }}</h4>
                   <div class="row">
 
-                    <div class="col-md-6 block-image"><img src="{% static 'img/good1.jpg' %}"></div>
+                    <div class="col-md-6 block-image"><img src="media/{{ good.image }}"></div>
                     <div class="col-md-6">
                       <div class="row">
                         <div class="col-sx-12 col-sm-6 col-md-6 text-left price-block-modal">
-                          <p>179000<span>руб</span></p>
+                          <p>{{ good.price }}<span>руб</span></p>
                         </div>
                               
                       </div> 
@@ -349,15 +352,15 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods1.png' %}">
-                            <p>8кВА 8кВА </p>
+                            <p>{{ good.power }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods2.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.fuel }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods3.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.cooling_system }}</p>
                             </div>
                             
                           </div>
@@ -368,15 +371,15 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods4.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.voltage }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods5.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.dimensions }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods6.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.weight }}</p>
                             </div>
                             
                           </div>     
@@ -491,14 +494,14 @@
                   <!-- <h4 class="modal-title" id="myModalLabel">Предварительный заказ</h4> -->
                 </div>
                 <div class="modal-body">
-                  <h4 class="text-left title-goods">Guardian, модель 6269</h4>
+                  <h4 class="text-left title-goods">{{ good.name }}</h4>
                   <div class="row">
 
                     <div class="col-md-6 block-image"><img src="{% static 'img/good1.jpg' %}"></div>
                     <div class="col-md-6">
                       <div class="row">
                         <div class="col-sx-12 col-sm-6 col-md-6 text-left price-block-modal">
-                          <p>179000<span>руб</span></p>
+                          <p>{{ good.price }}<span>руб</span></p>
                         </div>
                         <div class="col-sm-6 col-md-6 text-left">
                         <a class="catalog-btn" href="#order-form">Купить</a>
@@ -512,15 +515,15 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods1.png' %}">
-                            <p>8кВА 8кВА </p>
+                            <p>{{ good.power }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods2.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.fuel }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods3.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.cooling_system }}</p>
                             </div>
                             
                           </div>
@@ -531,15 +534,15 @@
                           <div class="row">
                             <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods4.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.voltage }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods5.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.dimensions }}</p>
                             </div>
                              <div class="col-xs-12 col-md-12">
                             <img src="{% static 'img/icon_goods6.png' %}">
-                            <p>8кВА</p>
+                            <p>{{ good.weight }}</p>
                             </div>
                             
                           </div>     
@@ -548,82 +551,80 @@
                     </div>
                     <div class="clearfix"></div>
 
-                     <p class="text-left description-text">Газовый генератор Generac 5916 вздушного охлаждения мощностью 13 кВт предназначен для резервного электроснабжения загородных коттеджей и малых коммерческих помещений в случае аварийного отключения электричества. В стандартную комплектацию данной газовой электростанции входит всепогодный шумопоглащающий кожух, что позволяет ее устанавливать на улице, не выделяя отдельного технического помещения внутри дома.
-                      Отличительная особенность данных газовых генераторов заключается в способности непрерывной работы в течение продолжительного времени (до нескольких суток) в отличие от аналогов, представленных на российском и европейских рынках газовых электростанций с высокооборотистыми двигателями, способных на непрерывную работу в течение нескольких часов. </p>
+                     <p class="text-left description-text">
+                       {{good.description}}
+                     </p>
 
                   <table class="table table-striped text-left table-options">
                     <tr>
                       <td>Мощность:</td>
-                      <td>12</td>
+                      <td>{{ good.power }}</td>
                     </tr>
                     <tr>
                       <td>Напряжение:</td>
-                      <td>123144</td>
+                      <td>{{ good.voltage }}</td>
                     </tr>
-                    <tr>
+                     <tr>
                       <td>Количество фаз:</td>
-                      <td>12</td>
+                      <td>{{ good.number_of_phases }}</td>
                     </tr>
                     <tr>
                       <td>Время непрерывной работы:</td>
-                      <td>12</td>
+                      <td>{{ good.continuous_operation }}</td>
                     </tr>
                     <tr>
                       <td>Тип запуска:</td>
-                      <td>12</td>
+                      <td>{{ good.startup_type}}</td>
                     </tr>
                     <tr>
                       <td>Тип двигателя:</td>
-                      <td>12</td>
+                      <td>{{ good.power_dvig }}</td>
                     </tr>
                     <tr>
                       <td>Объем двигателя:</td>
-                      <td>12</td>
+                      <td>{{ good.displacement }}</td>
                     </tr>
                     <tr>
                       <td>Кол-во цилиндров:</td>
-                      <td>12</td>
+                      <td>{{ good.number_of_cylinders }}</td>
                     </tr>
                     <tr>
                       <td>Частота вращения:</td>
-                      <td>12</td>
+                      <td>{{ good.rotational_speed }}</td>
                     </tr>
                     <tr>
                       <td>Система охлаждения:</td>
-                      <td>12</td>
+                      <td>{{ good.cooling_system }}</td>
                     </tr>
                     <tr>
                       <td>Вид топлива:</td>
-                      <td>12</td>
+                      <td>{{ good.fuel }}</td>
                     </tr>
                     <tr>
                       <td>Расход топлива:</td>
-                      <td>12</td>
+                      <td>{{ good.fuel_consumption }}</td>
                     </tr>
                     <tr>
                       <td>Объем топливного бака:</td>
-                      <td>12</td>
+                      <td>{{ good.fuel_capacity }}</td>
                     </tr>
                     <tr>
                       <td>Исполнение:</td>
-                      <td>12</td>
+                      <td>{{ good.performance }}</td>
                     </tr>
                     <tr>
                       <td>Размеры (ДхШхВ):</td>
-                      <td>12</td>
+                      <td>{{ good.dimensions }}</td>
                     </tr>
                     <tr>
                       <td>Вес:</td>
-                      <td>12</td>
+                      <td>{{ good.weight }}</td>
                     </tr>
                     <tr>
                       <td>Уровень шума:</td>
-                      <td>12</td>
+                      <td>{{ good.noise_level }}</td>
                     </tr>
-                    <tr>
-                      <td>Количество фаз:</td>
-                      <td>12</td>
-                    </tr>
+                   
 
                   </table>
 
@@ -720,6 +721,8 @@
 
      <!-- /Good1 -->
 
+{% endfor %}
+{% endif %} 
 
    
     <div class="btn-assorti container-fluid">

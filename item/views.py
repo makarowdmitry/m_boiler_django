@@ -11,7 +11,8 @@ from django.core.mail import send_mail
 
 # Create your views here.
 def index(request):
-	return render_to_response('index.html')
+	goods = Good.objects.all()
+	return render_to_response('index.html',{'goods':goods})
 
 def filter_reuest(request):
 	return HttpRespnse('ок')
