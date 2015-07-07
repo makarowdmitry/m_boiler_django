@@ -37,15 +37,24 @@ def filter_goods(request):
 		else:
 			all_entries_full = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel).filter(fabric__iexact=fabric)
 
+		
+		data2 = []
+		for item in all_entries_full.values():
+			# item['additional_goods'] = item.get_additional_good
+			new_list = data2.append(item)
 
+
+		# data_send = { key:value for item in all_entries_full.values()}
+		# data = json.dumps(data_send)
+		data = [{'one': '1', 'two': '3'},{'one': '2', 'two': '4'}]
 
 		
 		# all_entries = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel).filter(fabric__iexact=fabric)
 
 	# Выбрать товары с данными параметрами и отсортировать по цене. Дешевые сначала.
 	# Упаковать в json. отправить на сервер
-	return HttpResponse(all_entries_full)
+	return HttpResponse(json.dumps(data2), content_type='application/json')
 
-	# return HttpResponse(json.dumps(qr), content_type="application/json")
+	# return HttpResponse(json.dumps(all_entries_full.values_list()), content_type="application/json")
 
 

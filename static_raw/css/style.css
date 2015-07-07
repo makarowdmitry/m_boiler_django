@@ -1093,9 +1093,11 @@ h5 {
 	padding: 20px 0px;
 
 
+}	
+	
 }
 
-
-	
-	
+.loader-goods img{
+	height: 70px !important;
+	margin: 20px auto; 
 }

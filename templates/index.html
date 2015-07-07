@@ -279,14 +279,24 @@
       
     </div>
     <!-- /Filter -->
+    <!-- Loader -->
+  <div class="container-fluid wrapper text-center loader-goods-block">
+    <div class="row">
+      <div class="col-md-12 loader-goods">
+        <img src="{% static 'img/loading.gif' %}">
+      </div>
+    </div>
+  </div>
 
     <!-- Goods -->
 {% if goods.count > 0  %}
 {% for good in goods %}
 
 
+
+
       <!-- Good1 -->
-     <div class="container-fluid wrapper text-center">
+     <div class="container-fluid wrapper text-center" id="gooditem{{ good.id }}">
       <div class="row good-block-general">
         <div class="col-sx-12 col-sm-4 col-md-4 block-img-good"><img src="media/{{ good.image }}"></div>
         <div class="col-sx-12 col-sm-5 col-md-5 optins-goods">
@@ -432,6 +442,7 @@
                         </div>
 
                         <div class="form-group">
+                        <input type="hidden" id="{{ good.id }}">
                         <button class="catalog-btn pull-left" id="good{{ good.id}}">Отправить заявку</button>
                          </div>                      
                       </form>
@@ -618,6 +629,7 @@
                       <img src="media/{{ addit.image }}">
                       <p>{{ addit.name }}</p>
                       <p class="price-complect">{{ addit.price }} руб.</p>
+                      <input type="hidden" id="{{ addit.id }}">
                     </div>
 
                     {% endfor %}
@@ -646,6 +658,7 @@
                         </div>
 
                         <div class="form-group">
+                          <input type="hidden" id="{{ good.id }}">
                         <button id="good{{ good.id}}" class="catalog-btn pull-left">Отправить заявку</button>
                          </div>                      
                       </form>
@@ -661,8 +674,6 @@
                   </div>
 
                   </div>
-
-
      <!-- /Good1 -->
 
 {% endfor %}
@@ -922,6 +933,8 @@
     </script>
 
     <script>
+    $('.loader-goods').hide();
+
 
     price_left = 25000;
     price_right = 100000;
@@ -937,7 +950,7 @@
        $.ajax({
                     url: "/filter_goods/",
                     type: "POST",
-                    dataType:"html",
+                    // dataType:"html",
                     data: {
                         "price_left": price_left,
                         "price_right": price_right,
@@ -948,10 +961,50 @@
                                             },
                     error: function() {
                         alert('Ошибка получения запроса');
+                         $('.loader-goods').hide();
                     },
 
-                    success: function(data) {                
-                        alert(data);                      
+                    beforeSend: function (){
+                      $('.loader-goods').show();
+                    },
+
+                    success: function(data) {
+                        
+                        $("div [id ^= gooditem]").remove();
+                      
+
+                        // $('.loader-goods').after('<!-- Good'+data[i]["id"]+' --><div class="container-fluid wrapper text-center" id="gooditem'+data[i]["id"]+'"><div class="row good-block-general"><div class="col-sx-12 col-sm-4 col-md-4 block-img-good"><img src="media/'+data[i]["image"]+'"></div><div class="col-sx-12 col-sm-5 col-md-5 optins-goods"><div class="row"><div class="col-sx-12 col-sm-12 col-md-12 text-left"><h4>'+data[i]["name"]+'</h4></div></div><div class="row"><div class="col-sx-12 col-sm-6 col-md-6 text-left"><img src="static/img/icon_goods1.png"><p>'+data[i]["power"]+' КВт</p><img src="static/img/icon_goods2.png"><p>'+data[i]["fuel"]+'</p><img src="static/img/icon_goods3.png"><p>'+data[i]["cooling_system"]+'</p></div><div class="col-sm-6 col-md-6 text-left"><img src="static/img/icon_goods4.png"><p>'+data[i]["voltage"]+'</p><img src="static/img/icon_goods5.png"><p>'+data[i]["dimensions"]+'</p><img src="static/img/icon_goods6.png"><p>'+data[i]["weight"]+'</p></div></div></div><div class="col-sx-12 col-sm-3 col-md-3 block-more-good"><p>'+data[i]["price"]+'<br/><span>руб</span></p> <button class="catalog-btn" data-toggle="modal" data-target="#myModalbuy'+data[i]["id"]+'">Купить</button> <button class="btn btn-border" data-toggle="modal" data-target="#myModal'+data[i]["id"]+'">Подробнее</button> </div> </div></div>');
+
+                        // var goods_data = data;
+                        
+                        // var index_my;
+                        // for (index_my = 0; index_my < goods_data.length; ++index_my) {
+                          
+                        //     alert(goods_data[index_my];
+                        // }
+
+                      var i = 0; // создаем переменную i
+                      while(i < data.length){ // делать пока i меньше 4
+                        // alert(data[i]['name']);// для каждой кнопки выставлем функцию с параметром её id
+
+                        $('.loader-goods-block').after('<!-- Good'+data[i]["id"]+' --><div class="container-fluid wrapper text-center" id="gooditem'+data[i]["id"]+'"><div class="row good-block-general"><div class="col-sx-12 col-sm-4 col-md-4 block-img-good"><img src="media/'+data[i]["image"]+'"></div><div class="col-sx-12 col-sm-5 col-md-5 optins-goods"><div class="row"><div class="col-sx-12 col-sm-12 col-md-12 text-left"><h4>'+data[i]["name"]+'</h4></div></div><div class="row"><div class="col-sx-12 col-sm-6 col-md-6 text-left"><img src="static/img/icon_goods1.png"><p>'+data[i]["power"]+' КВт</p><img src="static/img/icon_goods2.png"><p>'+data[i]["fuel"]+'</p><img src="static/img/icon_goods3.png"><p>'+data[i]["cooling_system"]+'</p></div><div class="col-sm-6 col-md-6 text-left"><img src="static/img/icon_goods4.png"><p>'+data[i]["voltage"]+'</p><img src="static/img/icon_goods5.png"><p>'+data[i]["dimensions"]+'</p><img src="static/img/icon_goods6.png"><p>'+data[i]["weight"]+'</p></div></div></div><div class="col-sx-12 col-sm-3 col-md-3 block-more-good"><p>'+data[i]["price"]+'<br/><span>руб</span></p> <button class="catalog-btn" data-toggle="modal" data-target="#myModalbuy'+data[i]["id"]+'">Купить</button> <button class="btn btn-border" data-toggle="modal" data-target="#myModal'+data[i]["id"]+'">Подробнее</button> </div> </div> <!-- Modal Buy more--> <div class="modal fade modal-goods" id="myModalbuy'+data[i]["id"]+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <div class="modal-dialog modal-goods-body" role="document"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title" id="myModalLabel">Предварительный заказ</h4> </div> <div class="modal-body"> <h4 class="text-left title-goods">'+data[i]["name"]+'</h4> <div class="row"> <div class="col-md-6 block-image"><img src="media/'+data[i]["image"]+'"></div> <div class="col-md-6"> <div class="row"> <div class="col-sx-12 col-sm-6 col-md-6 text-left price-block-modal"> <p>'+data[i]["price"]+'<span>руб</span></p> </div> </div> <div class="row row-options"> <div class="col-xs-12 col-sm-6 col-md-6 text-left"> <div class="row"> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods1.png"> <p>'+data[i]["power"]+' КВт</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods2.png"> <p>'+data[i]["fuel"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods3.png"> <p>'+data[i]["cooling_system"]+'</p> </div> </div> </div> <div class="col-xs-12 col-sm-6 col-md-6 text-left"> <div class="row"> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods4.png"> <p>'+data[i]["voltage"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods5.png"> <p>'+data[i]["dimensions"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods6.png"> <p>'+data[i]["weight"]+'</p> </div> </div> </div> </div> </div> <div class="clearfix"></div> <!--  {% if good.get_additional_good.count > 0 %} <h5 class="text-left complect-title">Комплектация</h5> <div class="container-fluid complect-block"> <div class="row"> {% for addit in good.get_additional_good %} <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good"> <div class="checkbox text-left"> <label> <input type="checkbox" id="checkboxWarning" value="option1"> </label> </div> <img src="media/{{ addit.image }}"> <p>{{ addit.name }}</p> <p class="price-complect">{{ addit.price }} руб.</p> </div> {% endfor %} </div> </div> {% endif %} --> <!-- input modal --> <div clas="row"> <div class="col-md-12 text-left"> <form class="form-inline order-form"> <div class="form-group"> <input type="text" class="form-control pull-left" id="exampleInputName2" placeholder="ФИО"> </div> <div class="form-group"> <input type="email" class="form-control pull-left" id="exampleInputEmail2" placeholder="Телефон"> </div> <div class="form-group"> <input type="hidden" id="'+data[i]["id"]+'"> <button class="catalog-btn pull-left" id="good'+data[i]["id"]+'">Отправить заявку</button> </div> </form> </div> <!-- <div class="col-md-4"> </div>  --> </div> </div> </div> </div> </div> </div> <!-- Modal Read more--> <div class="modal fade modal-goods" id="myModal'+data[i]["id"]+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <div class="modal-dialog modal-goods-body" role="document"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <!-- <h4 class="modal-title" id="myModalLabel">Предварительный заказ</h4> --> </div> <div class="modal-body"> <h4 class="text-left title-goods">'+data[i]["name"]+'</h4> <div class="row"> <div class="col-md-6 block-image"><img src="media/'+data[i]["image"]+'"></div> <div class="col-md-6"> <div class="row"> <div class="col-sx-12 col-sm-6 col-md-6 text-left price-block-modal"> <p>'+data[i]["price"]+'<span>руб</span></p> </div> <div class="col-sm-6 col-md-6 text-left"> <a class="catalog-btn" href="#order-form">Купить</a> </div> </div> <div class="row row-options"> <div class="col-xs-12 col-sm-6 col-md-6 text-left"> <div class="row"> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods1.png"> <p>'+data[i]["power"]+' КВт</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods2.png"> <p>'+data[i]["fuel"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods3.png"> <p>'+data[i]["cooling_system"]+'</p> </div> </div> </div> <div class="col-xs-12 col-sm-6 col-md-6 text-left"> <div class="row"> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods4.png"> <p>'+data[i]["voltage"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods5.png"> <p>'+data[i]["dimensions"]+'</p> </div> <div class="col-xs-12 col-md-12"> <img src="static/img/icon_goods6.png"> <p>'+data[i]["weight"]+'</p> </div> </div> </div> </div> </div> <div class="clearfix"></div> <p class="text-left description-text"> '+data[i]["description"]+'</p> <table class="table table-striped text-left table-options"> <tr> <td>Мощность:</td> <td>'+data[i]["power"]+' КВт</td> </tr> <tr> <td>Напряжение:</td> <td>'+data[i]["voltage"]+'</td> </tr> <tr> <td>Количество фаз:</td> <td>'+data[i]["number_of_phases"]+'</td> </tr> <tr> <td>Время непрерывной работы:</td> <td>'+data[i]["continuous_operation"]+'</td> </tr> <tr> <td>Тип запуска:</td> <td>'+data[i]["startup_type"]+'</td> </tr> <tr> <td>Тип двигателя:</td> <td>'+data[i]["power_dvig"]+'</td> </tr> <tr> <td>Объем двигателя:</td> <td>'+data[i]["displacement"]+'</td> </tr> <tr> <td>Кол-во цилиндров:</td> <td>'+data[i]["number_of_cylinders"]+'</td> </tr> <tr> <td>Частота вращения:</td> <td>'+data[i]["rotational_speed"]+'</td> </tr> <tr> <td>Система охлаждения:</td> <td>'+data[i]["cooling_system "]+'</td> </tr> <tr> <td>Вид топлива:</td> <td>'+data[i]["fuel"]+'</td> </tr> <tr> <td>Расход топлива:</td> <td>'+data[i]["fuel_consumption"]+'</td> </tr> <tr> <td>Объем топливного бака:</td> <td>'+data[i]["fuel_capacity"]+'</td> </tr> <tr> <td>Исполнение:</td> <td>'+data[i]["performance"]+'</td> </tr> <tr> <td>Размеры (ДхШхВ):</td> <td>'+data[i]["dimensions"]+'</td> </tr> <tr> <td>Вес:</td> <td>'+data[i]["weight"]+'</td> </tr> <tr> <td>Уровень шума:</td> <td>'+data[i]["noise_level"]+'</td> </tr> </table> <!-- {% if good.get_additional_good.count > 0 %} <h5 class="text-left complect-title">Комплектация</h5> <div class="container-fluid complect-block"> <div class="row"> {% for addit in good.get_additional_good %} <div class="col-xs-4 col-sm-3  col-md-3 complect-block-good"> <div class="checkbox text-left"> <label> <input type="checkbox" id="checkboxWarning" value="option1"> </label> </div> <img src="media/{{ addit.image }}"> <p>{{ addit.name }}</p> <p class="price-complect">{{ addit.price }} руб.</p> <input type="hidden" id="{{ addit.id }}"> </div> {% endfor %} </div> </div> {% endif %} --> <!-- input modal --> <div clas="row" id="order-form"> <div class="col-md-12 text-left"> <form class="form-inline order-form"> <div class="form-group"> <input type="text" class="form-control pull-left" id="exampleInputName2" placeholder="ФИО"> </div> <div class="form-group"> <input type="email" class="form-control pull-left" id="exampleInputEmail2" placeholder="Телефон"> </div> <div class="form-group"> <input type="hidden" id="'+data[i]["id"]+'"> <button id="good'+data[i]["id"]+'" class="catalog-btn pull-left">Отправить заявку</button> </div> </form> </div> <!-- <div class="col-md-4"> </div>  --> </div> </div> </div> </div> </div> </div> </div> <!-- /Good1 -->');
+                        i++ //увеличиваем счетчик
+                      }
+                    
+                        
+                        
+
+                        $('.loader-goods').hide();
+                            
+                        
+                        
+
+                        // .each(function(i,elem) {
+                        // alert('f');
+                        // });
+
+                        
+
                     }
         });
       // alert(power_left +' '+power_right+'  '+price_left +' '+price_right+'  '+fuel +' '+fabric);

@@ -1099,3 +1099,7 @@ h5 {
 	
 	
 }
+
+.loader-goods img{
+	height: 10px !important;
+}
