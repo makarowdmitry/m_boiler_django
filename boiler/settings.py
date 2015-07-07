@@ -106,3 +106,11 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'boiler','static')
 STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR),'boiler', 'static_raw'),)
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = 'ppetroenergo@mail.ru'
+EMAIL_HOST_PASSWORD = 'feedgiopm2'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'ppetroenergo@mail.ru'
+SERVER_EMAIL = 'ppetroenergo@mail.ru'

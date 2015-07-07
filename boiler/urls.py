@@ -12,6 +12,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
 	url(r'^filter_goods/$', filter_goods),
+	url(r'^email_form/$', email_form),
 	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.path.join(st.BASE_DIR, 'media')}),
 	url(r'^admin/', include(admin.site.urls)),    
     url(r'^$', index),

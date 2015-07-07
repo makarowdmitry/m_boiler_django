@@ -59,4 +59,14 @@ def filter_goods(request):
 
 	# return HttpResponse(json.dumps(all_entries_full.values_list()), content_type="application/json")
 
+def email_form(request):
+	if request.method == 'POST':
+		name = request.POST.get('name', '')
+		phone = request.POST.get('phone', '')
+		subject = u'Заявка  - {0}, {1}'.format(name,phone)
+		message1 = u'Имя: {0}<br/>Телефон: {1}<br/>'.format(name,phone)
+		message = u'{0} {1}'.format(name,phone)
 
+		send_mail(subject, message, 'ppetroenergo@mail.ru', ['makarow.dmitry@gmail.com'], fail_silently=False, html_message=message1)
+	
+	return HttpResponse([phone,name])
