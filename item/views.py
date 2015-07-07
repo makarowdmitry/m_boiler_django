@@ -40,13 +40,15 @@ def filter_goods(request):
 		
 		data2 = []
 		for item in all_entries_full.values():
-			# item['additional_goods'] = item.get_additional_good
+			additional_goods = list(Good_additional.objects.filter(good__id=item['id']).values())
+			# item['additional_goods'] = list(item.get_additional_good)
+			item.update({'additional_goods': additional_goods})
 			new_list = data2.append(item)
 
 
 		# data_send = { key:value for item in all_entries_full.values()}
 		# data = json.dumps(data_send)
-		data = [{'one': '1', 'two': '3'},{'one': '2', 'two': '4'}]
+		# data = [{'one': '1', 'two': '3'},{'one': '2', 'two': '4'}]
 
 		
 		# all_entries = Good.objects.filter(price__in=price_interval).filter(power__in=power_interval).filter(fuel__iexact=fuel).filter(fabric__iexact=fabric)
